@@ -42,3 +42,5 @@ export function showLoader() {
 export function hideLoader() {
     loaderWrapper.classList.add("is-hidden");
 }
+
+
