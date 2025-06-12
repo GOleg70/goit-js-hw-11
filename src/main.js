@@ -56,5 +56,5 @@ async function handleClick(event) {
     } finally {
         hideLoader();
         event.target.reset();
-    }
+    } 
 }
