@@ -7,6 +7,7 @@ import SimpleLightbox from 'simplelightbox';
 // 1. Отримуємо посилання на DOM-елементи
 const itemUl = document.querySelector(".gallery");
 const form = document.querySelector(".form");
+const loaderWrapper = document.querySelector(".loader-wrapper");
 
 // 2. Ваша API-ключ та інші константи
 const myApiKey = "50762825-7fe49127b3d94f6c93c99dfe1";
@@ -14,6 +15,15 @@ const imageType = "photo";
 
 // 3. Додаємо слухача подій до форми
 form.addEventListener("submit", handleClick);
+
+// Функції для показу та приховування лоадера
+function showLoader() {
+    loaderWrapper.classList.remove("is-hidden");
+}
+
+function hideLoader() {
+    loaderWrapper.classList.add("is-hidden");
+}
 
 // --- Функція обробки відправки форми ---
 function handleClick(event) {
@@ -34,6 +44,8 @@ function handleClick(event) {
         return; // Зупиняємо виконання функції, якщо запит порожній
     }
 
+showLoader(); // <--- ПОКАЗУЄМО ЛОАДЕР
+
     // 7. --- ТУТ ВІДПРАВЛЯЄМО ЗАПИТ AXIOS ---
     // Це забезпечує, що запит відправляється ТІЛЬКИ коли користувач натискає "Search"
     // і змінна `qwerry` вже має актуальне значення.
@@ -44,6 +56,7 @@ function handleClick(event) {
             image_type: imageType,
             orientation: "horizontal", // Додаємо орієнтацію для кращих результатів
             safesearch: true,          // Додаємо безпечний пошук
+            per_page: 40,
         }
     })
     .then(response => {
@@ -64,7 +77,10 @@ function handleClick(event) {
                         <img class="gallery-image" src="${webformatURL}" alt="${tags}" />
                     </a>
                     <div class="info">
-                        <p class="info-item"> <b>Likes:</b> ${likes} <b>Views:</b> ${views} <b>Comments:</b> ${comments} <b>Downloads:</b> ${downloads}</p>
+                        <p class="info-item"><b>Likes:</b> ${likes}</p>
+                        <p class="info-item"><b>Views:</b> ${views}</p>
+                        <p class="info-item"><b>Comments:</b> ${comments}</p>
+                        <p class="info-item"><b>Downloads:</b> ${downloads}</p>
                     </div>
                 </li>
             `)
@@ -93,6 +109,7 @@ function handleClick(event) {
     })
     .finally(() => {
         // 9. Очищаємо поле вводу після пошуку (для зручності користувача)
+          hideLoader(); // <--- ПРИХОВУЄМО ЛОАДЕР ПІСЛЯ ЗАВЕРШЕННЯ ЗАПИТУ
         event.target.reset();
     });
 }
