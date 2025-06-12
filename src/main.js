@@ -21,7 +21,7 @@ async function handleClick(event) {
     clearGallery();
     if (query === "") {
         iziToast.info({
-            message: "Sorry, there are no images matching your search query. Please try again!",
+            message: " Sorry, there are no images matching your search query. Please try again! ",
             position: "topRight"
         });
         return;
@@ -34,7 +34,7 @@ async function handleClick(event) {
 
         if (images.length === 0) {
             iziToast.info({
-                message: "Sorry, there are no images matching your search query. Please try again!",
+                message: " Sorry, there are no images matching your search query. Please try again! ",
                 position: "topRight"
             });
             return;
@@ -50,7 +50,7 @@ async function handleClick(event) {
     } catch (error) {
         console.error("Помилка запиту:", error);
         iziToast.error({
-            message: "We're sorry, but we couldn't fetch images. Please try again later!",
+            message: " We're sorry, but we couldn't fetch images. Please try again later!",
             position: "topRight"
         });
     } finally {
